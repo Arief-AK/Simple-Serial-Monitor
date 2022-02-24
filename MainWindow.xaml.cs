@@ -270,7 +270,7 @@ namespace SerialMonitor_1
             try
             {
                 // Clear past contents
-                if(SERIAL_OUTPUT_MONITOR.LineCount >= 100)
+                if(SERIAL_OUTPUT_MONITOR.LineCount >= 25)
                 {
                     SERIAL_OUTPUT_MONITOR.Text = current_message + '\n';
                 }
