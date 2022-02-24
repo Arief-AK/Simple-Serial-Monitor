@@ -1,0 +1,158 @@
+﻿<Window x:Class="SerialMonitor_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SerialMonitor_1"
+        mc:Ignorable="d"
+        Title="Serial Monitor" Height="450" Width="800" MinWidth="700" MinHeight="600" Icon="/Assets/SERIAL.ico">
+    <Grid>
+
+        <!-- BASE GRID DEFINITIONS -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Grid Grid.Row="0" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- SAXION LOGO -->
+            <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Image Width="200" Source="/Assets/835b8eb2f113aacaf85034feb0b2a95e9a9084a3_lg_saxion_rgb.png"/>
+            </StackPanel>
+
+            <!-- COM PORT AND BAUD RATE SELECTION BOXES -->
+            <Grid Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right">
+
+                <!-- COM PORT AND BAUD RATE LABELS -->
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="BAUD RATE" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Label Content="    " VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Label Content="COM PORT" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <!-- COM PORT AND BAUD RATE SELECTION -->
+                <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                    <ComboBox x:Name="BAUD_RATE_COMBO_BOX" Width="100" ItemsSource="{Binding BAUD_RATE_CB}" SelectionChanged="ChangedBAUDRate" SelectedIndex="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                    <ComboBox x:Name="COM_PORT_COMBO_BOX" Width="100" ItemsSource="{Binding COM_PORT_CB}" SelectionChanged="ChangedCOMPort" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                </StackPanel>
+
+            </Grid>
+
+            <!-- START AND STOP BUTTON -->
+            <Grid Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    
+                    <!-- CLEAR MONITOR BUTTON -->
+                    <Button x:Name="ClearButton" Padding="5" HorizontalAlignment="Left" VerticalAlignment="Bottom" MinWidth="50" MinHeight="25" Click="OnClearClick"/>
+
+                    <!-- START MONITOR BUTTON -->
+                    <Button x:Name="StartButton" Padding="5" HorizontalAlignment="Left" VerticalAlignment="Bottom" MinWidth="50" MinHeight="25" Click="OnMonitorStart"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- REFRESH COM PORT BUTTON -->
+            <Grid Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="RefreshButton" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="RefreshPorts">
+                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="15">
+                            <Image Source="/Assets/1200px-Refresh_icon.svg.png"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+        <!-- COLLAPSED VIEW -->
+        <Grid Grid.Row="1">
+
+            <!-- CONTENT GRID DEFINITIONS -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- INFORMATION -->
+            <Grid Grid.Row="0" Grid.Column="0" Background="#009c82" >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock x:Name="CURRENT_COM_PORT" VerticalAlignment="Center" Foreground="White" FontWeight="Medium" FontSize="25"/>
+                        <TextBlock x:Name="CURRENT_BAUD_RATE" VerticalAlignment="Center" Foreground="White" FontWeight="Medium" FontSize="25"/>
+                    </StackPanel>
+                    
+                </Grid>
+
+                <Grid Grid.Row="1">
+
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Name="TimestampCheckBox" Content="Timestamps" FontSize="12" Click="TimestampClicked"/>
+                    </StackPanel>
+                    
+                </Grid>
+            </Grid>
+
+            <!-- MONITOR -->
+            <Grid Grid.Row="0" Grid.Column="1" Background="AliceBlue">
+
+                <!-- SCROLLING SERIAL MONITOR -->
+                <ScrollViewer x:Name="MonitorScrollView" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="True">
+
+                    <!-- SERIAL DATA INPUT -->
+                    <TextBox x:Name="SERIAL_OUTPUT_MONITOR" TextChanged="MonitorTextChanged" FontSize="18"/>
+
+                </ScrollViewer>
+
+            </Grid>
+
+        </Grid>
+
+        <!-- FOOTER -->
+        <Grid Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- ABOUT ME -->
+            <Grid Grid.Column="2" Grid.Row="2">
+                <TextBlock Padding="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="Arief Kurniawan 2022"/>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Window>
