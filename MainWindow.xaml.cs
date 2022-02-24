@@ -23,7 +23,7 @@ namespace SerialMonitor_1
         private List<string> baud_rate_combo_box = new List<string>();
 
         private string current_com_port, current_baud_rate;
-        private bool _communicate, display_timestamp;
+        private bool _communicate, display_timestamp, custom_text;
 
         private string current_message;
 
@@ -118,11 +118,14 @@ namespace SerialMonitor_1
             // Set variables
             current_message = "";
             display_timestamp = false;
+            custom_text = false;
 
             // Set display variables
             SERIAL_OUTPUT_MONITOR.Text = "Press 'START' button to start monitoring...\n";
             StartButton.Content = "START";
             ClearButton.Content = "CLEAR";
+            CustomTextLabel.Visibility = Visibility.Hidden;
+            CustomTextTextBox.Visibility = Visibility.Hidden;
 
             // Set communication to false
             _communicate = false;
@@ -330,6 +333,27 @@ namespace SerialMonitor_1
         {
             SERIAL_OUTPUT_MONITOR.Clear();
             SERIAL_OUTPUT_MONITOR.Text = "Press 'START' button to start monitoring...\n";
+        }
+
+        private void CustomTextChecked(object sender, RoutedEventArgs e)
+        {
+            custom_text = CustomTextCheckBox.IsChecked.Value;
+        }
+
+        private void CustomTextClicked(object sender, RoutedEventArgs e)
+        {
+            custom_text = CustomTextCheckBox.IsChecked.Value;
+
+            if(custom_text)
+            {
+                CustomTextLabel.Visibility = Visibility.Visible;
+                CustomTextTextBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                CustomTextLabel.Visibility = Visibility.Hidden;
+                CustomTextTextBox.Visibility = Visibility.Hidden;
+            }
         }
 
         private void TimestampClicked(object sender, RoutedEventArgs e)
